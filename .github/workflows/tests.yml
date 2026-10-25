@@ -1,11 +1,11 @@
-name: Database tests
+name: Python foundation and auth tests
 
 on:
   push:
   pull_request:
 
 jobs:
-  sqlite-tests:
+  python-tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -15,5 +15,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Run SQLite foundation tests
+      - name: Install dependencies
+        run: python -m pip install -r server/requirements-dev.txt
+      - name: Run database and auth tests
         run: python -m unittest discover -s server/tests -v
